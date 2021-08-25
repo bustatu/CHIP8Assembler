@@ -1,12 +1,12 @@
-CLS         # This clears the screen            0x200
-CALL 214    # Calls function at 0x214           0x202
+# https://github.com/dmatlack/chip8/blob/master/roms/programs/Minimal%20game%20%5BRevival%20Studios%2C%202007%5D.ch8
 
-RAW 22
-RAW 1A
-RAW 22
-RAW 1A
-RAW 22
-RAW 20
+# START
+CLS         # This clears the screen                            0x200
+CALL 214    # Calls function at 0x214                           0x202
+CALL 21A    # Calls the draw routine at 0x21A to draw sprite    0x204
+CALL 21A    # Calls the draw routine at 0x21A to delete sprite  0x206
+CALL 220    # Calls function at 0x220                           0x208
+
 RAW 22
 RAW 1A
 RAW 60
@@ -18,18 +18,18 @@ RAW 42
 RAW 12
 RAW 06
 
-LD V3 20    # Loads in register 3 value 0x20    0x214
-LD V4 19    # Loads in register 4 value 0x19    0x216
-RET         # Returns from the function         0x218
+# Function at 0x214
+LD V3 20    # Loads in register 3 value 0x20                    0x214
+LD V4 19    # Loads in register 4 value 0x19                    0x216
+RET         # Returns from the function                         0x218
 
-0xA2
-0x4A
-0xD3
-0x46
-0x00
-0xEE
-0x60
-0x08
+# Draw routine at 0x21A
+LD I 24A    # Loads adress 24A to I                             0x21A
+DRW V3 V4 6 # Draws sprite at coords V3 V4 with height 6        0x21C
+RET         # Returns from the function                         0x21E
+
+# Function at 0x220
+LD V0 08    # Loads in register 0 value 0x00                    0x220
 0xE0
 0x9E
 0x12

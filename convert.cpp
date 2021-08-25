@@ -42,8 +42,14 @@ void writebyte(uint8_t byte, std::ofstream &fout)
     flag = 0x02;
 
 #define ld_reg_byte(opcode)    \
+    /* Set the byte in the opcode */    \
+    std::stringstream(dest) >> std::hex >> instr;   \
+    /* Read which register needs to be updated */   \
+    uint16_t aux;    \
+    std::stringstream(src.substr(1, 1)) >> std::hex >> aux; \
     /* Make the opcode */   \
     instr |= opcode;    \
+    instr |= aux << 8;  \
     flag = 0x00;
 
 #define unknown()   \
@@ -89,10 +95,7 @@ void convert(std::string input, uint16_t &instr, uint16_t& flag, std::ofstream &
             }
             
             // Load byte to register
-            if('0' <= dest[0] && dest[0] >= '9')
-            {
-                ld_reg_byte(0x6000);
-            }
+            if('0' <= dest[0] && dest[0] <= '9')    {   ld_reg_byte(0x6000);    }
             else
             {
                 printf("{E}: Unknown load source %s!\n", dest.c_str());

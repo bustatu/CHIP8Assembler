@@ -1,4 +1,4 @@
-# CHIP8 Assembler
+# CHIP8 Assembler (WIP)
 
 ## How to build
 
@@ -16,4 +16,6 @@ After executing this, the executable should be in the */build/* file.
 
 ## Currently included sources:
 
-- (WIP) https://github.com/dmatlack/chip8/blob/master/roms/programs/Minimal%20game%20%5BRevival%20Studios%2C%202007%5D.ch8
+All of them have the original source in their .asm file.
+
+- Minimal game [Revival Studios, 2007]
