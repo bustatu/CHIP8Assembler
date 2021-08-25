@@ -1,0 +1,8 @@
+# Ignore built files
+build/
+
+# Ignore vscode files
+.vscode/
+
+# Ignore build scripts
+build.sh
