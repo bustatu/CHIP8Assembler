@@ -16,6 +16,6 @@ After executing this, the executable should be in the */build/* file.
 
 ## Currently included sources:
 
-All of them have the original source in their .asm file.
+All of them have the original link in their .asm file.
 
 - Minimal game [Revival Studios, 2007]

@@ -67,7 +67,10 @@ int main(int argc, char* argv[])
                     break;
                 // Raw byte data has been copied
                 case 0x02:
-                    printf("{I}: Raw byte data has been copied!\n");
+                    //printf("{I}: Raw byte data has been copied!\n");
+                    break;
+                // Empty line
+                case 0x03:
                     break;
                 default:
                     printf("{W}: Unknown flag state: %02X\n", flag);
