@@ -97,8 +97,88 @@ void convert(std::string input, uint16_t &instr, uint16_t& flag, std::ofstream &
     else if(word == "JP")   {   has_addr(0x1000);       }   // Jump
     else if(word == "CALL") {   has_addr(0x2000);       }   // Call function
     else if(word == "RAW")  {   byte_transfer();        }   // Write raw bytes
+    else if(word == "SKP")  {                               // Skip if key at Vx pressed
+        std::string src;
+        if(!(ss >> src))
+        {
+            printf("{E}: No skip argument!\n");
+            flag = 0x01;
+        }
+
+        // Valid register format
+        if(src[0] == 'V' && isHex(src[1]))
+        {
+            instr = 0xE09E;
+            instr |= hextodec(src.substr(1, 1));
+            flag = 0x00;
+        }
+        else
+        {
+            printf("{E}: Unknown skip argument %s!\n", src.c_str());
+            flag = 0x01;           
+        }
+    }
+    else if(word == "ADD")  {                               // Add function (can have multiple patterns)
+        std::string src, dest;
+        if(!(ss >> src >> dest))
+        {
+            printf("{E}: Add format incorrect!\n");
+            flag = 0x01;
+        }
+        else if(src[0] != 'V' || !isHex(src[1]))
+        {
+            printf("{E}: Unknown add source\n");
+            flag = 0x01;
+        }
+        else if(dest[0] == 'V')
+        {
+            printf("{E}: Adding reg to reg not defined yet!\n");
+            flag = 0x01;
+        }
+        else if(isHex(dest[0]) && isHex(dest[1]))
+        {
+            instr = 0x7000;
+            instr |= hextodec(src.substr(1, 1)) << 8;
+            instr |= hextodec(dest.substr(0, 2));
+            flag = 0x00;
+        }
+        else 
+        {
+            printf("{E}: Unknown add format!\n");
+            flag = 0x01;
+        }
+    }
+    else if(word == "SE")  {                               // Skip equal (can have multiple patterns)
+        std::string src, dest;
+        if(!(ss >> src >> dest))
+        {
+            printf("{E}: Skip equal format incorrect!\n");
+            flag = 0x01;
+        }
+        else if(src[0] != 'V' || !isHex(src[1]))
+        {
+            printf("{E}: Unknown skip equal source\n");
+            flag = 0x01;
+        }
+        else if(dest[0] == 'V')
+        {
+            printf("{E}: Skip equal reg to reg not defined yet!\n");
+            flag = 0x01;
+        }
+        else if(isHex(dest[0]) && isHex(dest[1]))
+        {
+            instr = 0x3000;
+            instr |= hextodec(src.substr(1, 1)) << 8;
+            instr |= hextodec(dest.substr(0, 2));
+            flag = 0x00;
+        }
+        else 
+        {
+            printf("{E}: Unknown skip equal format!\n");
+            flag = 0x01;
+        }
+    }
     else if(word == "LD")   {                               // Load function (can have multiple patterns)
-        // Read the source
         std::string src, dest;
         if(!(ss >> src))
         {
